@@ -38,6 +38,36 @@
             echo $_POST["email"];
         }
     ?>
+
+<h2>Ejercicio 2</h2>
+
+<p> Crea un programa para la generación repetitiva de 3 números aleatorios hasta obtener una
+secuencia compuesta por: impar, par, impar. Estos números deben almacenarse en una matriz de Mx3,
+donde M es el número de filas y 3 el número de columnas. Al final muestra el número de iteraciones
+y la cantidad de números generados: 12 números obtenidos en 4 iteraciones</p>
+
+<?php
+require_once 'p03_funciones.php';
+$matriz = array();
+$iteraciones = 0;
+
+while (true) {
+    $iteraciones++;
+    
+    $num1 = generarImpar();
+    $num2 = generarPar();
+    $num3 = generarImpar();
+    if ($num1 % 2 == 1 && $num2 % 2 == 0 && $num3 % 2 == 1) {
+        $matriz[] = array($num1, $num2, $num3);
+        break; 
+    }
+}
+echo "Matriz resultante:\n"; 
+foreach ($matriz as $fila) {
+    echo implode(", ", $fila) . "\n";  echo '<br>';
+}
+echo "Número de iteraciones: $iteraciones\n";  echo '<br>';
+echo "Cantidad de números generados: " . ($iteraciones * 3) . "\n";  echo '<br>';
+?>
 </body>
-~
 </html>
