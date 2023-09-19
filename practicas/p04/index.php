@@ -115,5 +115,37 @@ echo "\nUsando un ciclo do while:\n";  echo '<br>';
 echo "Número entero aleatorio múltiplo de $numeroDado encontrado: $numeroAleatorio\n";  echo '<br>';
 echo "Número de intentos: $intentos\n";  echo '<br>';
 ?>
+
+<h2> Ejercicio 4 </h2>
+<p> Crear un arreglo cuyos índices van de 97 a 122 y cuyos valores son las letras de la ‘a’
+a la ‘z’. Usa la función chr(n) que devuelve el caracter cuyo código ASCII es n para poner
+el valor en cada índice. Es decir: </p>
+<p>[97] => a </p>
+<p> [98] => b</p>
+<p>[99] => c </p>
+<p>[122] => z </p>
+<p>-Crea el arreglo con un ciclo for</p>
+<p>-Lee el arreglo y crea una tabla en XHTML con echo y un ciclo foreach</p>
+<p>foreach ($arreglo as $key => $value) { # code...}</p>
+
+<?php
+require_once 'p04_funciones.php';
+$arreglo = crearArreglo();
+?>
+    <table border="1">
+        <tr>
+            <th>Índice</th>
+            <th>Valor</th>
+        </tr>
+        <?php
+        foreach ($arreglo as $indice => $valor) 
+        {
+            echo "<tr>";
+            echo "<td>$indice</td>";
+            echo "<td>$valor</td>";
+            echo "</tr>";
+        }
+        ?>
+    </table>
 </body>
 </html>

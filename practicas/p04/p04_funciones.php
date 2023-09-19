@@ -18,4 +18,13 @@ function generarNumeroAleatorio() {
 function esMultiplo($numero, $multiplo) {
     return $numero % $multiplo == 0;
 }
+
+//Función para Crear Arreglo
+function crearArreglo() {
+    $arreglo = array();
+    for ($i = 97; $i <= 122; $i++) {
+        $arreglo[$i] = chr($i);
+    }
+    return $arreglo;
+}
 ?>
