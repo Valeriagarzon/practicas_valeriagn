@@ -167,7 +167,39 @@ bienvenida apropiado.</p>
         <input type="submit" value="Enviar">
     </form>
 
+<h2> Ejercicio 6 </h2>
+<p>Crea en código duro un arreglo asociativo que sirva para registrar el parque vehicular de
+una ciudad. Cada vehículo debe ser identificado por:</p>
+<p>-Matricula</p>
+<p>-Auto (Marca, Modelo (año), Tipo (sedan|hachback|camioneta)) </p>
+<p>-Propietario (Nombre, , Dirección, Ciudad)</p>
+<p>La matrícula debe tener el siguiente formato LLLNNNN, donde las L pueden ser letras de
+la A-Z y las N pueden ser números de 0-9.</p>
+<p>-Para hacer esto toma en cuenta las siguientes instrucciones:</p>
+<p>-Crea en código duro el registro para 15 autos</p>
+<p>-Utiliza un único arreglo, cuya clave de cada registro sea la matricula</p>
+<p>-Lógicamente la matricula no se puede repetir.</p>
+<p>-Los datos del Auto deben ir dentro de un arreglo.</p>
+<p>-Los datos del Propietario deben ir dentro de un arreglo.</p>
+<p>Usa print_r para mostrar la estructura general del arreglo,</p>
+<p>Finalmente crea un formulario simple donde puedas consultar la información:</p>
+<p>-Por matricula de auto.</p>
+<p>-De todos los autos registrados.</p>
 
+    <h2>Consulta de Vehículos</h2>
+    
+    <form action="mostrar_informacion.php" method="post">
+        <label for="matricula">Ingrese la Matrícula del Auto:</label>
+        <input type="text" name="matricula" id="matricula" required><br>
+        <input type="submit" value="Consultar por Matrícula">
+    </form>
+    
+    <form action="mostrar_informacion.php" method="post">
+        <input type="hidden" name="consulta_todos" value="true">
+        <input type="submit" value="Consultar Todos los Autos">
+    </form>
+
+    
 
 </body>
 </html>
