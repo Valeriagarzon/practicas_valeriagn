@@ -47,7 +47,7 @@ donde M es el número de filas y 3 el número de columnas. Al final muestra el n
 y la cantidad de números generados: 12 números obtenidos en 4 iteraciones</p>
 
 <?php
-require_once 'p03_funciones.php';
+require_once 'p04_funciones.php';
 $matriz = array();
 $iteraciones = 0;
 
@@ -68,6 +68,52 @@ foreach ($matriz as $fila) {
 }
 echo "Número de iteraciones: $iteraciones\n";  echo '<br>';
 echo "Cantidad de números generados: " . ($iteraciones * 3) . "\n";  echo '<br>';
+?>
+
+<h2> Ejercicio 3 </h2>
+<p>Utiliza un ciclo while para encontrar el primer número entero obtenido aleatoriamente,
+pero que además sea múltiplo de un número dado.</p>
+<p> Crear una variante de este script utilizando el ciclo do-while. </p>
+<p> El número dado se debe obtener vía GET. </p>
+
+<?php
+require_once 'p04_funciones.php';
+if (isset($_GET['numero_dado'])) {
+    $numeroDado = intval($_GET['numero_dado']);
+} else {
+    die("Proporcione un número válido");
+}
+// Utilizando un ciclo while
+$encontrado = false;
+$intentos = 0;
+while (!$encontrado) {
+    $intentos++;
+    $numeroAleatorio = generarNumeroAleatorio();
+    
+    if (esMultiplo($numeroAleatorio, $numeroDado)) {
+        $encontrado = true;
+    }
+}
+
+echo "Usando un ciclo while:\n";  echo '<br>';
+echo "Número entero aleatorio múltiplo de $numeroDado encontrado: $numeroAleatorio\n";  echo '<br>';
+echo "Número de intentos: $intentos\n";  echo '<br>';  echo '<br>';
+
+// Utilizando un ciclo do-while
+$encontrado = false;
+$intentos = 0;
+do {
+    $intentos++;
+    $numeroAleatorio = generarNumeroAleatorio();
+    
+    if (esMultiplo($numeroAleatorio, $numeroDado)) {
+        $encontrado = true;
+    }
+} while (!$encontrado);
+
+echo "\nUsando un ciclo do while:\n";  echo '<br>';
+echo "Número entero aleatorio múltiplo de $numeroDado encontrado: $numeroAleatorio\n";  echo '<br>';
+echo "Número de intentos: $intentos\n";  echo '<br>';
 ?>
 </body>
 </html>
