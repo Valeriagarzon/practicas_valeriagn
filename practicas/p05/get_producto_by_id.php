@@ -1,6 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
 "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es">
+
+
 	<?php
 	if(isset($_GET['id']))
 		$id = $_GET['id'];
@@ -31,15 +33,12 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title>Producto</title>
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
 	</head>
 	<body>
 		<h3>PRODUCTO</h3>
 
-		<br/>
-		
 		<?php if( isset($row) ) : ?>
-
 			<table class="table">
 				<thead class="thead-dark">
 					<tr>
@@ -62,17 +61,23 @@
 						<td><?= $row['precio'] ?></td>
 						<td><?= $row['unidades'] ?></td>
 						<td><?= utf8_encode($row['detalles']) ?></td>
-						<td><img src=<?= $row['imagen'] ?> ></td>
+						<td><img src="<?= $row['imagen'] ?>" alt="producto"/></td>
 					</tr>
 				</tbody>
 			</table>
 
 		<?php elseif(!empty($id)) : ?>
 
-			 <script>
+			 <script type="text/javascript">
                 alert('El ID del producto no existe');
              </script>
 
 		<?php endif; ?>
+
+		<p>
+    <a href="http://validator.w3.org/check?uri=referer"><img
+      src="http://www.w3.org/Icons/valid-xhtml11" alt="XHTML 1.1 válido" height="31" width="88" /></a>
+  </p>
+
 	</body>
 </html>
