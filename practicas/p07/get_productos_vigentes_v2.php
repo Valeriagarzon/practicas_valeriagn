@@ -1,96 +1,149 @@
-<?php
-header("Content-Type: application/xhtml+xml; charset=utf-8");
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es">
 
-$data = array();
+<?php
+if (isset($_GET['tope'])) {
+    $tope = $_GET['tope'];
+} else {
+    die('Parámetro "tope" no detectado...');
+}
 
 /** SE CREA EL OBJETO DE CONEXIÓN */
 @$link = new mysqli('localhost', 'root', 'Mitatanka1', 'marketzone');
-/** NOTA: con @ se suprime el Warning para gestionar el error por medio de código */
-
-/** comprobar la conexión */
-if ($link->connect_errno)
-{
-    die('Falló la conexión: '.$link->connect_error.'<br/>');
+if ($link->connect_errno) {
+    @die('Falló la conexión: ' . $link->connect_error . '<br/>');
 }
 
 /** Crear una tabla que no devuelve un conjunto de resultados */
-if ( $result = $link->query("SELECT * FROM productos WHERE eliminado = 0") )
-{
-    /** Se extraen las tuplas obtenidas de la consulta */
-    $row = $result->fetch_all(MYSQLI_ASSOC);
+if ($result = $link->query("SELECT * FROM productos WHERE unidades <= $tope AND eliminado = 0")) {
+?>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Productos</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+</head>
+<body>
 
-    /** Inicio del documento XHTML */
-    echo '<?xml version="1.0" encoding="UTF-8"?>';
-    echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">';
-    echo '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es">';
-    echo '<head>';
-    echo '<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />';
-    echo '<title>Productos</title>';
-    echo '<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>';
-    echo '<script>';
-    echo 'function show(id) {';
-    
-    echo 'var nombre = document.getElementById(id).querySelector(".row-data.nombre").innerHTML;';
-    echo 'var marca = document.getElementById(id).querySelector(".row-data.marca").innerHTML;';
-    echo 'var modelo = document.getElementById(id).querySelector(".row-data.modelo").innerHTML;';
-    echo 'var precio = document.getElementById(id).querySelector(".row-data.precio").innerHTML;';
-    echo 'var unidades = document.getElementById(id).querySelector(".row-data.unidades").innerHTML;';
-    echo 'var detalles = document.getElementById(id).querySelector(".row-data.detalles").innerHTML;';
-    echo 'var imagen = document.getElementById(id).querySelector(".row-data.imagen").innerHTML;';
-    echo 'alert("Nombre: " + nombre + "\\nMarca: " + marca + "\\nModelo: " + modelo + "\\nPrecio: " + precio + "\\nUnidades: " + unidades + "\\nDetalles: " + detalles);';
-    echo 'window.location.href = "formulario_productos_v2.php?nombre=" + nombre; ';
-    echo '}';
-    echo '</script>';
-    echo '</head>';
-    echo '<body>';
-    echo '<h3>PRODUCTOS</h3>' ;
-
-    /** Validación de W3C */
-    echo '<h3><p>
+<p>
     <a href="http://validator.w3.org/check?uri=referer"><img
-      src="http://www.w3.org/Icons/valid-xhtml11" alt="XHTML 1.1 válido" height="31" width="88" /></a>
-  </p></h3>' ;
+      src="http://www.w3.org/Icons/valid-xhtml11" alt="Valid XHTML 1.1" height="31" width="88" /></a>
+  </p>
 
-    /** Se crea una tabla XHTML para mostrar los productos */
-    echo '<table class="table">';
-    echo '<thead class="thead-dark">';
-    echo '<tr>';
-    echo '<th scope="col">#</th>';
-    echo '<th scope="col">Nombre</th>';
-    echo '<th scope="col">Marca</th>';
-    echo '<th scope="col">Modelo</th>';
-    echo '<th scope="col">Precio</th>';
-    echo '<th scope="col">Unidades</th>';
-    echo '<th scope="col">Detalles</th>';
-    echo '<th scope="col">Imagen</th>';
-    echo '<th scope="col">Modificar</th>'; 
-    echo '</tr>';
-    echo '</thead>';
-    echo '<tbody>';
-    
-    foreach ($row as $producto) {
-        echo '<tr id="' . $producto['id'] . '">';
-        echo '<th scope="row">' . $producto['id'] . '</th>';
-        echo '<td class="row-data nombre">' . $producto['nombre'] . '</td>';
-        echo '<td class="row-data marca">' . $producto['marca'] . '</td>';
-        echo '<td class="row-data modelo">' . $producto['modelo'] . '</td>';
-        echo '<td class="row-data precio">' . $producto['precio'] . '</td>';
-        echo '<td class="row-data unidades">' . $producto['unidades'] . '</td>';
-        echo '<td class="row-data detalles">' . utf8_encode($producto['detalles']) . '</td>';
-        echo '<td class="row-data imagen"><img src="' . $producto['imagen'] . '" alt="producto"/></td>';
-        echo '<td><input type="button" value="Actualizar" onclick="show(' . $producto['id'] . ')" /></td>';
-        echo '</tr>';
-    }
-    
-    echo '</tbody>';
-    echo '</table>';
-    
-    echo '</body>';
-    echo '</html>';
+    <h3>PRODUCTOS</h3>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Marca</th>
+                <th scope="col">Modelo</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Unidades</th>
+                <th scope="col">Detalles</th>
+                <th scope="col">Imagen</th>
+                <th scope="col">Editar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($result as $row) : ?>
+                <tr>
+                    <th scope="row"><?= $row['id'] ?></th>
+                    <td><?= $row['nombre'] ?></td>
+                    <td><?= $row['marca'] ?></td>
+                    <td><?= $row['modelo'] ?></td>
+                    <td><?= $row['precio'] ?></td>
+                    <td><?= $row['unidades'] ?></td>
+                    <td><?= $row['detalles'] ?></td>
+                    <td><img src="<?= $row['imagen'] ?>" alt="Imagen del producto" /></td>
+                    <td><input type="button" 
+                               value="Editar" 
+                               onclick="confirmEdit('<?= $row['nombre'] ?>', '<?= $row['marca'] ?>', '<?= $row['modelo'] ?>', '<?= $row['precio'] ?>', '<?= $row['unidades'] ?>', '<?= $row['detalles'] ?>', '<?= $row['imagen'] ?>')" /></td> 
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
 
-    /** útil para liberar memoria asociada a un resultado con demasiada información */
+    <?php
+    /** Útil para liberar memoria asociada a un resultado con demasiada información */
     $result->free();
+} else {
+    echo '<p>No se encontraron productos.</p>';
 }
 
 $link->close();
+?>
+<script>
+    function confirmEdit(nombre, marca, modelo, precio, unidades, detalles, imagen) {
+        var confirmationMessage = "Se editará este Producto\n\n";
+        confirmationMessage += "Nombre: " + nombre + "\n";
+        confirmationMessage += "Marca: " + marca + "\n";
+        confirmationMessage += "Modelo: " + modelo + "\n";
+        confirmationMessage += "Precio: " + precio + "\n";
+        confirmationMessage += "Unidades: " + unidades + "\n";
+        confirmationMessage += "Detalles: " + detalles + "\n";
+        confirmationMessage += "Imagen: " + imagen + "\n";
+
+        if (confirm(confirmationMessage)) {
+            send2form(nombre, marca, modelo, precio, unidades, detalles, imagen);
+        }
+    }
+
+    function send2form(nombre, marca, modelo, precio, unidades, detalles, imagen) {
+        var form = document.createElement("form");
+
+        var nombreIn = document.createElement("input");
+        nombreIn.type = 'text';
+        nombreIn.name = 'nombre';
+        nombreIn.value = nombre;
+        form.appendChild(nombreIn);
+
+        var marcaIn = document.createElement("input");
+        marcaIn.type = 'text';
+        marcaIn.name = 'marca';
+        marcaIn.value = marca;
+        form.appendChild(marcaIn);
+
+        var modeloIn = document.createElement("input");
+        modeloIn.type = 'text';
+        modeloIn.name = 'modelo';
+        modeloIn.value = modelo;
+        form.appendChild(modeloIn);
+
+        var precioIn = document.createElement("input");
+        precioIn.type = 'number';
+        precioIn.name = 'precio';
+        precioIn.value = precio;
+        form.appendChild(precioIn);
+
+        var unidadesIn = document.createElement("input");
+        unidadesIn.type = 'number';
+        unidadesIn.name = 'unidades';
+        unidadesIn.value = unidades;
+        form.appendChild(unidadesIn);
+
+        var detallesIn = document.createElement("input");
+        detallesIn.type = 'text';
+        detallesIn.name = 'detalles';
+        detallesIn.value = detalles;
+        form.appendChild(detallesIn);
+
+        var imagenIn = document.createElement("input");
+        imagenIn.type = 'text';
+        imagenIn.name = 'imagen';
+        imagenIn.value = imagen;
+        form.appendChild(imagenIn);
+
+        console.log(form);
+
+        form.method = 'POST';
+        form.action = 'http://localhost/practicas_valeriagn/practicas/p07/formulario_productos_v3.php';
+
+        document.body.appendChild(form);
+        form.submit();
+    }
+</script>
+
+</body>
+</html>
 

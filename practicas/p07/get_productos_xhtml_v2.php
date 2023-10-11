@@ -10,7 +10,7 @@
     }
     else
     {
-        die('Parámetro "tope" no detectado...');
+        die('Parámetro "tope" no detectado');
     }
 
     if (!empty($tope))

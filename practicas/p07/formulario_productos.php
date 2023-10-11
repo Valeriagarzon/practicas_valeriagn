@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Modificar Productos</title>
+    <title>Editar Productos</title>
     <style type="text/css">
         ol,
         ul {
@@ -84,11 +84,11 @@
 
 <body>
 
-    <h2>Modificar Producto</h2>
+    <h2>Editar Producto</h2>
     <form id="formulario_productos" action="actualizar_producto.php" method="post">
 
         <fieldset>
-            <legend>Modificar Producto</legend>
+            <legend>Editar Producto</legend>
 
             <!-- Campo oculto para enviar el ID -->
             <input type="hidden" name="id" id="form-id" value="">
@@ -103,7 +103,7 @@
                 <li><label for="form-imagen">Imagen:</label> <input type="file" name="imagen" id="form-imagen" accept="image/*"></li> <br>
             </ul>
         </fieldset>
-        <input type="submit" value="Actualizar Producto">
+        <input type="submit" value="Editar Producto">
     </form>
 
 </body>
